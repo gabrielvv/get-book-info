@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "watch": "nodemon -w . --exec \"npm start\"",
+    "debug": "set DEBUG=myapp:server",
+    "start": "set DEBUG=myapp:server & node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -12,7 +14,6 @@
     "http-errors": "^1.6.3",
     "morgan": "~1.9.0",
     "multiparty": "^4.2.1",
-    "pug": "2.0.0-beta11",
-    "tesseract.js": "^1.0.10"
+    "pug": "2.0.0-beta11"
   }
 }
