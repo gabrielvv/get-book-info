@@ -1,0 +1,19 @@
+{
+  "name": "get-book-info",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielvv/get-book-info.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielvv/get-book-info/issues"
+  },
+  "homepage": "https://github.com/gabrielvv/get-book-info#readme"
+}
