@@ -17,26 +17,29 @@
     var video = null;
     var canvas = null;
     var photo = null;
+    var fileInput = null;
     var startbutton = null;
+    var form = null;
+    const constraint = {
+        video: true,
+        audio: false
+    }
 
     function startup() {
-        debugger
         video = document.getElementById('video');
         canvas = document.getElementById('canvas');
         photo = document.getElementById('photo');
         startbutton = document.getElementById('startbutton');
+        fileInput = document.getElementById('file_input');
+        form = document.getElementById('form');
 
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia);
 
-            navigator.mediaDevices.getUserMediacl(
-            {
-                video: true,
-                audio: false
-            },
-            function (stream) {
+            navigator.mediaDevices.getUserMedia(constraint)
+            .then(function(stream) {
                 console.log(stream)
                 // if (navigator.mozGetUserMedia) {
                 //     video.src = stream;
@@ -44,11 +47,10 @@
                 var vendorURL = window.URL || window.webkitURL;
                 video.srcObject = stream;
                 video.play();
-            },
-            function (err) {
+            })
+            .catch((err) => {
                 console.log("An error occured! " + err);
-            }
-        );
+            });
 
         video.addEventListener('canplay', function (ev) {
             if (!streaming) {
@@ -102,8 +104,14 @@
             canvas.height = height;
             context.drawImage(video, 0, 0, width, height);
 
-            var data = canvas.toDataURL('image/png');
+            const data = canvas.toDataURL('image/png');
             photo.setAttribute('src', data);
+            const blob = dataURItoBlob(data)
+            console.log("blob", blob);
+            fileInput.files[0] = blob;
+            form.submit();
+            //readBlob(blob).then(console.log).catch(console.error);
+
         } else {
             clearphoto();
         }
@@ -112,4 +120,36 @@
     // Set up our event listener to run the startup process
     // once loading is complete.
     window.addEventListener('load', startup, false);
+
+    function dataURItoBlob(dataURI) {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+    
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+    
+        return new Blob([ia], {type:mimeString});
+    }
+
+    function readBlob(blob){
+        return new Promise((resolve, reject) => {
+            var reader = new FileReader();
+            reader.addEventListener("loadend", function() {
+                // reader.result contient le contenu du
+                // blob sous la forme d'un tableau typé
+                resolve(reader.result)
+            });
+            reader.readAsArrayBuffer(blob);
+        })
+    }
 })();
