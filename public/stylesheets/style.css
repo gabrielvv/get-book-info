@@ -6,3 +6,15 @@ body {
 a {
   color: #00B7FF;
 }
+
+html, body, ul {
+  height: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  height: 33%;
+}

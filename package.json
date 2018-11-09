@@ -4,16 +4,19 @@
   "private": true,
   "scripts": {
     "watch": "nodemon -w . --exec \"npm start\"",
-    "debug": "set DEBUG=myapp:server",
-    "start": "set DEBUG=myapp:server & node ./bin/www"
+    "debug": "DEBUG=myapp:server",
+    "start": "node ./bin/www"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "^1.6.3",
+    "lodash": "^4.17.11",
     "morgan": "~1.9.0",
     "multiparty": "^4.2.1",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "request": "^2.88.0"
   }
 }

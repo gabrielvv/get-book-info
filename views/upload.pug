@@ -1,7 +1,15 @@
 extends layout
 
 block content
-    form(action="/upload", method="post", enctype="multipart/form-data")
-        input(type="text", name="title")
-        input(type="file", multiple, name="image")
-        button(type="submit", value="Upload") Upload File
+    //- form(action="/upload", method="post", enctype="multipart/form-data")
+    //-     input(type="text", name="title")
+    //-     input(type="file", multiple, name="image")
+    //-     button(type="submit", value="Upload") Upload File
+    div(class="camera")
+        video(id="video") Video stream not available
+        button(id="startbutton") Take photo
+        canvas(id="canvas")
+        div(class="output")
+            img(id="photo" alt="The screen capture will appear in this box.")
+    
+    script(src="js/script.js")
