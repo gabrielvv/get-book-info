@@ -107,10 +107,24 @@
             const data = canvas.toDataURL('image/png');
             photo.setAttribute('src', data);
             const blob = dataURItoBlob(data)
-            console.log("blob", blob);
-            fileInput.files[0] = blob;
-            form.submit();
-            //readBlob(blob).then(console.log).catch(console.error);
+            
+            const fd = new FormData();
+            
+            const xhr = new XMLHttpRequest();
+            fd.append('image', blob);
+            xhr.overrideMimeType("text/plain");
+            xhr.open('POST', 'http://localhost:3000/upload', true);
+            console.log(xhr.responseType)
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4 && xhr.status === 200) {
+                  document.body.innerHTML = xhr.responseText;
+                }
+              };
+            xhr.send(fd);
+
+            //fileInput.files.add(new File([blob], "image"))
+            //console.log(fileInput.files)
+            //form.submit()
 
         } else {
             clearphoto();
@@ -130,10 +144,11 @@
             byteString = unescape(dataURI.split(',')[1]);
     
         // separate out the mime component
-        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        console.log('MIME', mimeString)
     
         // write the bytes of the string to a typed array
-        var ia = new Uint8Array(byteString.length);
+        const ia = new Uint8Array(byteString.length);
         for (var i = 0; i < byteString.length; i++) {
             ia[i] = byteString.charCodeAt(i);
         }

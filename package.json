@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "watch": "nodemon -w . --exec \"npm start\"",
-    "debug": "DEBUG=myapp:server",
+    "debug": "cross-env DEBUG=myapp:server",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -18,5 +18,8 @@
     "multiparty": "^4.2.1",
     "pug": "2.0.0-beta11",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
   }
 }
